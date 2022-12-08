@@ -1,0 +1,48 @@
+body
+{
+    background-color: rgb(14, 19, 20);
+}
+input
+{
+    color: lightslategrey;
+    font-family: monospace;
+    font-size: 15px;
+    font-style: italic;
+    background-color: powderblue;
+    font-weight: bolder;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+a
+{
+    color: rgb(75, 195, 197);
+}
+input.note
+{
+    color: lightslategrey;
+    font-family: monospace;
+    font-size: 15px;
+    font-style: italic;
+    background-color: rgb(190, 41, 41);
+    font-weight: bolder;
+    text-align: center;
+}
+input.login
+{
+    color: lightslategrey;
+    font-family: monospace;
+    font-size: 15px;
+    font-style: italic;
+    background-color: powderblue;
+    font-weight: bolder;
+    text-align: center;
+}
+label
+{
+    color: rgb(127, 244, 255);
+    font-size: 40px;
+    font-style: normal;
+    height: 30px;
+    width: 500px;
+}
