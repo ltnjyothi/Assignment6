@@ -7,15 +7,17 @@
         <link href="style.css" rel="stylesheet">
     </head>
     <body>
-    <form id="note">
+    <form id="notemaking">
         <label for="note">Note:</label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="text" id="noteid" name="note" placeholder="Enter your Notes" class="Notes">
+        <input type="text" id="note" name="note" placeholder="Enter your Notes" class="Notes">
         <br>
-        <input type="submit" value="Submit" class="Notes">
+        
+        <input type="button" onclick="noten()" value="Submit" class="Notes">
         </form>
         <img src="./Images/real-phoenix-bird-sightings-2.jpg" alt="Phoenix" width="500" height="400"><br>
         <a href="./login.html">Login Page</a>
         <a href="./register.html">Signup Page</a>
-        <script src="main.js"></script>
+        <a id="logout-btn">Logout</a>
+        <script  src="Scripts/user.js"></script>
     </body>
 </html>
