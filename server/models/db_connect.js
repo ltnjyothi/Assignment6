@@ -21,7 +21,7 @@ con.connect(function (err){
   console.log("connected successfully");
   con.query(`CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_DB}`, function (err, result){
        if(err) throw err;
-       console.log("Database created successfully "+result);
+       console.log("Database created successfully ");
     });
 });
 

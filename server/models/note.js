@@ -4,8 +4,8 @@ const con = require("./db_connect");
 async function createTable() {
 let sql=`CREATE TABLE IF NOT EXISTS notes (
   note_ID INT NOT NULL AUTO_INCREMENT,
-  emailid VARCHAR(255) NOT NULL,
-  notes VARCHAR(255) NOT NULL,
+  uname VARCHAR(255) NOT NULL,
+  note VARCHAR(255) NOT NULL,
   CONSTRAINT notePK PRIMARY KEY(note_ID)
 ); `
 await con.query(sql);
@@ -14,8 +14,8 @@ createTable();
 
 async function create(note) {
 
-const sql = `INSERT INTO notes (emailid, notes)
-  VALUES ("${note.emailid}","${note.notes}");
+const sql = `INSERT INTO notes (uname, note)
+  VALUES ("${note.uname}","${note.note}");
 `
 
 await con.query(sql);
@@ -39,7 +39,7 @@ async function getAllNotes() {
    }
 async function editNote(note) {
   let sql = `UPDATE notes 
-    SET notes = "${note.notes}"
+    SET note = "${note.note}"
     WHERE note_ID = ${note.note_ID}
   `;
   
@@ -53,5 +53,18 @@ async function deleteNote(note) {
   `
   await con.query(sql);
   }
+ /* if(user&&notedata) getallnotes();
 
+function getallnotes(){
+    let textdata=document.getElementById('textnotes');
+    fetchData("/notes/getnote",user,"POST")
+    .then((data) => {
+ console.log(data);
+ for(let i=0;i<data.length;i++){
+ textdata.value+=data[i].notecontent;
+ }
+
+    })
+}
+*/
 module.exports = {getNote, getAllNotes, create, deleteNote, editNote};

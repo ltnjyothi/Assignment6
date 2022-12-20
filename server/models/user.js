@@ -1,17 +1,17 @@
-const users = [
+/*const users = [
   {
-      FName:"jyothi",
-      LName:"paladi",
-      Email_ID: "paladi@gmail.com",
-       Password: "12345"
+      fname:"jyothi",
+      lname:"paladi",
+      uname: "paladi@gmail.com",
+       password: "12345"
   },
   {
       user: "paladi",
-       Password: "12345"
+       password: "12345"
     
   },
 ];
-
+*/
 
 const con = require("./db_connect");
 
@@ -19,10 +19,10 @@ const con = require("./db_connect");
 async function createTable() {
 let sql=`CREATE TABLE IF NOT EXISTS users (
   USER_ID INT NOT NULL AUTO_INCREMENT,
-  FName VARCHAR(255) NOT NULL,
-  LName VARCHAR(255) NOT NULL,
-  Email_ID VARCHAR(255) NOT NULL UNIQUE,
-  Password VARCHAR(255) NOT NULL,
+  fname VARCHAR(255) NOT NULL,
+  lname VARCHAR(255) NOT NULL,
+  uname VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
   CONSTRAINT userPK PRIMARY KEY(USER_ID)
 ); `
 await con.query(sql);
@@ -30,12 +30,12 @@ await con.query(sql);
 createTable();
 
 async function enroll(user) {
-let cUser = await getUserinfo(user.Email_ID);
+let cUser = await getUser(user);
 console.log(user)
 if(cUser.length > 0) throw error("This email is already in use");
 
-const sql = `INSERT INTO users (FName,LName,Email_ID, Password)
-  VALUES ("${user.FName}", "${user.LName}","${user.Email_ID}","${user.Password}");
+const sql = `INSERT INTO users (fname,lname,uname,password)
+  VALUES ("${user.fname}", "${user.lname}","${user.uname}","${user.password}");
 `
 await con.query(sql);
 return await login(user);
@@ -43,15 +43,21 @@ return await login(user);
 
 async function userupdate(user) {
   let sql = `UPDATE users 
-    SET Email_ID = "${user.Email_ID}"
+    SET uname = "${user.uname}"
     WHERE USER_ID = ${user.USER_ID}
   `;
   
   await con.query(sql);
-  let updatedUser = await +(user);
+  let updatedUser = await getUser(user);
   return updatedUser[0];
   }
-async function getUserinfo(user) {
+  async function getAllUsers() {
+    const sql = "SELECT * FROM users;";
+    let users = await con.query(sql);
+    console.log(users)
+    return users;
+   }
+async function getUser(user) {
   let sql;
   
   if(user.USER_ID) {
@@ -62,7 +68,7 @@ async function getUserinfo(user) {
   } else {
     sql = `
     SELECT * FROM users 
-      WHERE Email_ID = "${user.Email_ID}"
+      WHERE uname = "${user.uname}"
   `;
   }
   return await con.query(sql);  
@@ -74,11 +80,11 @@ async function removeUser(user) {
     await con.query(sql);
     }
 async function login(user) { 
-  console.log(user.Email_ID);
-let cUser = await getUserinfo(user); 
+  console.log(user.uname);
+let cUser = await getUser(user); 
 
-if(!cUser[0]) throw Error(user.Email_ID+" email not found");
-if(cUser[0].Password !== user.Password) throw Error("Password incorrect");
+if(!cUser[0]) throw Error(user.uname+" email not found");
+if(cUser[0].password !== user.password) throw Error("Password incorrect");
 console.log(cUser[0]);
 
 return cUser[0];
@@ -88,4 +94,4 @@ return cUser[0];
 
 
 
-module.exports = {enroll, userupdate, removeUser, login  };
+module.exports = {enroll, userupdate, getAllUsers, removeUser, login  };
