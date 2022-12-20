@@ -21,7 +21,7 @@ router
     }
   })
 
-  .post('/enroll', async (req, res) => {
+  .post('/register', async (req, res) => {
     try {
       let user = await User.enroll(req.body);
       res.send({...user, password: undefined})
@@ -30,9 +30,9 @@ router
     }
   })
 
-  .put('/modify', async (req, res) => {
+  .put('/edit', async (req, res) => {
     try {
-      let user = await User.modifyUser(req.body);
+      let user = await User.userupdate(req.body);
       res.send({...user, password: undefined});
     } catch(err) {
       res.status(401).send({message: err.message})
@@ -41,13 +41,12 @@ router
 
   .delete('/delete', async (req, res) => {
     try {
-      User.deleteUser(req.body);
+      User.removeUser(req.body);
       res.send({success: "We'll Miss You... :("})
     } catch(err) {
       res.status(401).send({message: err.message})
     }
   })
-
 
 
   
